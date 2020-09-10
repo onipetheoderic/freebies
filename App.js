@@ -1,21 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import DrawerNavigator from "./navigation/DrawerNavigation";
+import { AppLoading } from 'expo';
+import { CounterContextProvider } from "./store";
+import { Root } from "native-base";
 
-export default function App() {
+import {
+  useFonts,
+  Nunito_400Regular,
+  Lato_400Regular,
+  Inter_900Black,
+  Pacifico_400Regular,
+  Montserrat_400Regular,
+  Montserrat_600SemiBold,
+  Bangers_400Regular,
+  Kalam_400Regular
+} from '@expo-google-fonts/dev';
+
+ const App = () => {
+  let [fontsLoaded] = useFonts({
+    Nunito_400Regular,
+    Lato_400Regular,
+    Inter_900Black,
+    Pacifico_400Regular,
+    Montserrat_400Regular,
+    Montserrat_600SemiBold,
+    Bangers_400Regular,
+    Kalam_400Regular
+  });
+    if (!fontsLoaded) {
+      return <AppLoading />;
+    } else {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CounterContextProvider initialValue="Theoderic App">
+      <Root>
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </Root>
+    </CounterContextProvider>
   );
+    }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

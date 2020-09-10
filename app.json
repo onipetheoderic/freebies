@@ -21,6 +21,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.onipetheoderic.freebies",
+      "config": {
+        "googleMaps":{
+        "apiKey": "AIzaSyASxlr1JMPjk2RUEDtm20Wdf_2iw-l_4Mk"
+        }
+        }     
     }
+
   }
 }
