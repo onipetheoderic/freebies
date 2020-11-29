@@ -3,6 +3,8 @@ import React, { useState, createContext, useReducer } from "react";
 // Create Context Object
 const initialState = {
     currentLanguage:"en",
+    currentCouponDetails:null,
+    showCouponDetail:false,
     showDescriptionBox:false,
     notificationCount: 0,
     allNotifications: [],
@@ -92,6 +94,8 @@ export const CounterContextProvider = props => {
             return {...state, selectedMerchant:action.payload}
         case 'setLocation':
             return {...state, location:action.payload}
+        case 'setCouponDetail':
+            return {...state, currentCouponDetails:action.payload}
         case 'setCurrentLocation':
             return {...state, currentLocation:action.payload}
         case 'setCurrentDestination':

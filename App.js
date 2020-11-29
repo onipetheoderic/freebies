@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import DrawerNavigator from "./navigation/DrawerNavigation";
+import ApolloProvider from './ApolloProvider';
 import { AppLoading } from 'expo';
 import { CounterContextProvider } from "./store";
 import { Root } from "native-base";
@@ -32,13 +33,15 @@ import {
       return <AppLoading />;
     } else {
   return (
-    <CounterContextProvider initialValue="Theoderic App">
-      <Root>
-        <NavigationContainer>
-          <DrawerNavigator />
-        </NavigationContainer>
-      </Root>
-    </CounterContextProvider>
+    <ApolloProvider>
+      <CounterContextProvider initialValue="Theoderic App">
+        <Root>
+          <NavigationContainer>
+            <DrawerNavigator />
+          </NavigationContainer>
+        </Root>
+      </CounterContextProvider>
+    </ApolloProvider>
   );
     }
 }

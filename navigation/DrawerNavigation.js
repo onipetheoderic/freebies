@@ -6,6 +6,9 @@ import { ContactStackNavigator, MainStackNavigator } from "./StackNavigator";
 import TabNavigator from "./TabNavigator";
 import Contact from '../src/screens/Contact';
 import Splash from '../src/screens/Splash';
+import Login from '../src/screens/Login';
+import Register from '../src/screens/Register';
+import ForgotPassword from '../src/screens/ForgotPassword';
 import MapViewScreen from '../src/screens/MapViewScreen';
 import CouponScreen from '../src/screens/CouponScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -50,9 +53,13 @@ const DrawerNavigator = () => {
           <Text style={styles.textStyle}>Log Out</Text>       
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.drawerItems}>     
-          <Text style={styles.textStyle}>Sign In/Sign Up</Text>       
+      <TouchableOpacity onPress={()=>navigation.navigate("Login")} style={styles.drawerItems}>     
+          <Text style={styles.textStyle}>Sign In</Text>       
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate("Register")} style={styles.drawerItems}>     
+          <Text style={styles.textStyle}>Sign Up</Text>       
+      </TouchableOpacity>
+       
        
 
        <View style={styles.socialMediaCont}>
@@ -90,6 +97,21 @@ const DrawerNavigator = () => {
       }}/>
       <Drawer.Screen name="MapViewScreen" component={MapViewScreen} />
       <Drawer.Screen name="CouponScreen" component={CouponScreen} />
+      <Drawer.Screen name="Login" component={Login}  options={({ route, navigation }) => {
+        return {
+          swipeEnabled: false,
+        };
+      }}/>
+       <Drawer.Screen name="Register" component={Register}  options={({ route, navigation }) => {
+        return {
+          swipeEnabled: false,
+        };
+      }}/>
+      <Drawer.Screen name="ForgotPassword" component={ForgotPassword}  options={({ route, navigation }) => {
+        return {
+          swipeEnabled: false,
+        };
+      }}/>
       <Drawer.Screen name="Home" component={MainStackNavigator} options={({ route, navigation }) => {
         return {
           swipeEnabled: false,
@@ -138,7 +160,7 @@ const styles = StyleSheet.create({
   },
   drawerItems: {
     
-    height:55,
+    height:45,
     width:'90%',
     alignItems:'center',
     marginLeft:'10%',
