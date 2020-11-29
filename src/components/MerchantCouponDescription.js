@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View,Image, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -13,18 +13,16 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { CounterContext } from "../../store";
 import getDirections from 'react-native-google-maps-directions';
 import {zoomIn, fadeIn} from '../animations/animations'
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import * as Animatable from 'react-native-animatable';
-import {Toast} from 'native-base';
-
 
 const window = Dimensions.get('window');
-    const { width, height }  = window;
-
-
-export default function CouponDetails(props) {
+    const { width, height }  = window
+export default function MerchantCouponDescription(props) {
     const [current, changeCurrent] = useState(true);
+    const [activeIndex, setActiveIndex] = useState(0);
     const [directionOption, showDirectionOption] = useState(false);
-    const {height, width, top, right, left, iconName} = props;
+    const {height} = props;
     const borderRadius = height/2;
     const currentIcon = current === true ? props.iconName : props.toIcon; 
     
@@ -35,64 +33,86 @@ export default function CouponDetails(props) {
     const showMe = () => {
         dispatch({ type: 'setShowDescriptionBox', payload:false})
     }
+    const carouselItemWidth = parseInt(width)*90/100
+   
+      
+      let imageList = [
+          {link:"https://image.freepik.com/free-psd/hamburger-banner-with-delicious-fast-food-burgers_23-2148421441.jpg"},
+          {link:"https://image.freepik.com/free-photo/side-view-french-fries-with-seasoning_141793-4899.jpg"},
+          {link:"https://image.freepik.com/free-photo/top-view-fast-food-mix-hamburger-doner-sandwich-chicken-nuggets-rice-vegetable-salad-chicken-sticks-caesar-salad-mushrooms-pizza-chicken-ragout-french-fries-mayo_141793-3997.jpg"},
+          {link:"https://image.freepik.com/free-photo/fried-spicy-chicken-wings_1339-42043.jpg"}
+      ]
 
-    const addToWallet = () => {
-        Toast.show({
-            text: "Added to Wallet",
-            textStyle: { color: "green" },
-            duration: 4000
-          })
+      const _renderItem = ({item,index}) =>{
+        return (
+           
+             
+          <Image source={{uri: item.link}} 
+        style={{ alignSelf:'center',width:'100%', height:'100%',
+        
+        justifyContent:'center', resizeMode:'contain'}} />
+           
+
+        )
     }
-    console.log(state.currentCouponDetails,"GGG")
     return (
         <Animatable.View animation="fadeIn" duration={500} 
         style={{position:'absolute', alignItems:'center', width: '100%', height:'100%', zIndex:10,
-        backgroundColor:'rgba(0,0,0,0.7)', justifyContent:'center' }}>
+        backgroundColor:'rgba(0,0,0,0.7)', }}>
+            <View style={{marginTop:'20%'}} />
             <TouchableOpacity onPress={()=>showMe()}>
             <AntDesign name="close" size={40} style={styles.iconz}/>
             </TouchableOpacity>
-        
-            <Animatable.View animation="bounceInUp" 
-            duration={1000} style={{width:'90%', height:'50%', 
-            borderRadius:10, alignSelf:'center'}}>
-                <View 
-                style={{flex:4, backgroundColor:'black', borderTopRightRadius:10, borderTopLeftRadius:10}}>
-                    <Text style={{alignSelf:'center', marginTop:10, fontSize:17, 
-                    color:'white',fontFamily:'Montserrat_600SemiBold', fontWeight:'bold'}}>{state.currentCouponDetails.merchant_name}</Text>
-                     <Text style={{alignSelf:'center',fontFamily:'Montserrat_600SemiBold',color:'yellow', fontSize:12, 
-                    textTransform:'uppercase'}}>{state.currentCouponDetails.coupon_description}</Text>
+         
+            <Animatable.Text animation="pulse" 
+            style={{ fontFamily:'Montserrat_600SemiBold',
+            position:'absolute', top:'10%', color:'yellow'}}>Swipe Left</Animatable.Text>
+          
+           <Animatable.View animation="bounceInUp" duration={1000} 
+            style={{width:'90%', height:350, borderRadius:10}}>
+                 <View 
+            style={{flex:3,borderTopRightRadius:10, borderTopLeftRadius:10}}>
+              <Carousel
+                  layout={"tinder"}
+                  data={imageList}
+                  sliderWidth={carouselItemWidth}
+                  itemWidth={carouselItemWidth}
+                  renderItem={_renderItem}
+                  onSnapToItem = { index => setActiveIndex(index) } 
+            />
+            </View>             
 
-<Image source={{uri: props.image}} 
-            style={{ alignSelf:'center',width:'100%', height:'100%', marginTop:-20,
-            
-            justifyContent:'center', resizeMode:'contain'}} />
                 
+            
+              
+                <View style={styles.bottomCont}>
+                <View>
+                    <TouchableOpacity style={styles.eachCircle}>
+                        <Feather name="phone-call" style={{color:'black', alignSelf:'center'}} size={20} />
+                    </TouchableOpacity>
+                   
                 </View>
                 
-               
+                <View>
+                    <TouchableOpacity style={styles.eachCircle}>
+                        <Feather name="map-pin" style={{color:'black', alignSelf:'center'}} size={20} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{marginLeft:5}}>
+                    <TouchableOpacity style={styles.eachCircle}>
+                        <Feather name="globe" style={{color:'black', alignSelf:'center'}} size={20} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{marginLeft:5}}>
+                    <TouchableOpacity style={styles.eachCircle}>
+                        <Feather name="mail" style={{color:'black', alignSelf:'center'}} size={20} />
+                    </TouchableOpacity>
+                </View>
+                
               
-                <View style={{flex:1, flexDirection:'row', justifyContent:'center', backgroundColor:'white',  
-                borderBottomEndRadius:10, borderBottomStartRadius:10}}>
-                    
-                    <LinearGradient  colors={['#4df1a4', 'black']} 
-                    style={styles.redeemButton}>
-                        <TouchableOpacity style={{
-                             height:'100%', alignItems:'center', justifyContent:'center'}}
-                              onPress={()=>props.navigation.navigate("MerchantDeals")}>
-                            <Text style={styles.redeemText}>All Merchant Offers</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-
-                    <LinearGradient colors={['#4df1a4', 'black']} 
-                    style={styles.redeemButton}>
-                        <TouchableOpacity style={{
-                             height:'100%', alignItems:'center', justifyContent:'center'}}
-                              onPress={()=>addToWallet("")}>
-
-                        <Text onPress={()=>addToWallet("")} style={styles.redeemText}>Add to Wallet</Text>
-                        </TouchableOpacity>
-                        
-                    </LinearGradient>
+                  
                    
                 </View>
             </Animatable.View>
@@ -102,9 +122,23 @@ export default function CouponDetails(props) {
   );
 }
 
+MerchantCouponDescription.propTypes = {
+    // height: PropTypes.number.isRequired,
+    // width: PropTypes.number.isRequired,
+    // top: PropTypes.number.isRequired,
+    // right: PropTypes.number.isRequired,
+}
 
 
 const styles = StyleSheet.create({
+   
+    bottomCont: {
+        flex:1, flexDirection:'row', 
+        justifyContent:'space-between', 
+        backgroundColor:'white',  
+        borderBottomEndRadius:10, 
+        borderBottomStartRadius:10
+    },
     icons: {
         color: '#0478BF'
     },
@@ -113,14 +147,14 @@ const styles = StyleSheet.create({
         marginBottom:10
     },
     eachCircle: {
-        width:50,
+        width:60,
         justifyContent:'center',
         alignItems:'center',
-        height:50,
-        borderRadius:25,
+        margin:5,
+        height:60,
+        borderRadius:35,
         backgroundColor:'white',
-        position:'absolute',
-        zIndex:50,
+        zIndex:70,
         elevation:15,
         top:5,
     },
@@ -182,16 +216,16 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         textAlign:'center',
         fontFamily:'Montserrat_600SemiBold',
-        fontSize:10
+        fontSize:15
     },
     redeemButton: {
         width:'40%',
-        height:40,
+        height:60,
         backgroundColor: 'red',
         marginTop:10,
         marginLeft:10,
         justifyContent:'center',
-        borderRadius:3,
+        borderRadius:9,
     },
     couponStyle: {
         alignSelf:'center',fontFamily:'Montserrat_600SemiBold',fontSize:36, 

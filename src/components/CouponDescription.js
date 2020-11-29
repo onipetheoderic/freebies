@@ -66,12 +66,13 @@ export default function CouponDescription(props) {
       }
     return (
         <Animatable.View animation="fadeIn" duration={500} style={{position:'absolute', alignItems:'center', width: '100%', height:'100%', zIndex:10,
-        backgroundColor:'rgba(0,0,0,0.7)', justifyContent:'center' }}>
+        backgroundColor:'rgba(0,0,0,0.7)', }}>
+            <View style={{marginTop:'20%'}} />
             <TouchableOpacity onPress={()=>showMe()}>
             <AntDesign name="close" size={40} style={styles.iconz}/>
             </TouchableOpacity>
         
-            <Animatable.View animation="bounceInUp" duration={1000} style={{width:'90%', height:'60%', borderRadius:10, alignSelf:'center'}}>
+            <Animatable.View animation="bounceInUp" duration={1000} style={{width:'90%', height:350, borderRadius:10}}>
                 <LinearGradient  colors={['#4df1a4', '#1de1de', '#1bcdda']} 
                 style={{flex:1, backgroundColor:'yellow', borderTopRightRadius:10, borderTopLeftRadius:10}}>
                     <Text style={{alignSelf:'center', marginTop:20, fontSize:50, 

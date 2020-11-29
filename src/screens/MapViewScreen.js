@@ -114,7 +114,7 @@ export default function MapViewScreen(props) {
     return (
       <View style={styles.container}>
           {state.showDescriptionBox &&
-           <CouponDetails image={dummy[currentIndex].coupon_image}/>
+           <CouponDetails image={dummy[currentIndex].coupon_image} navigation={props.navigation}/>
           }
             <View style={{position:'absolute', width:'80%', top: 25, left:70}}>
             <FormField marginVertical={6} 

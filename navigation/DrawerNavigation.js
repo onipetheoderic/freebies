@@ -9,26 +9,36 @@ import Splash from '../src/screens/Splash';
 import Login from '../src/screens/Login';
 import Register from '../src/screens/Register';
 import ForgotPassword from '../src/screens/ForgotPassword';
+import Profile from '../src/screens/Profile';
 import MapViewScreen from '../src/screens/MapViewScreen';
 import CouponScreen from '../src/screens/CouponScreen';
+import MerchantDeals from '../src/screens/MerchantDeals';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { CounterContext } from "../store";
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Toast} from 'native-base';
 
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
 
-
+  const logout = () => {
+    Toast.show({
+      text: "Logout successful",
+      textStyle: { color: "yellow" },
+      duration: 4000
+    })
+  }
   function CustomDrawerContent({ navigation }) {
 
+    
     return (
       <>
       <View style={styles.transparentLogoCont}>
-        <View style={styles.logoView}>
+        <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={styles.logoView}>
           <Image source={logo} style={styles.logoImage} />          
-        </View>        
+        </TouchableOpacity>        
         <Text style={styles.nameText}>Theoderic Onipe</Text>
         <Text style={styles.emailText}>onipetheoderic@gmail.com</Text>
       </View>
@@ -40,16 +50,16 @@ const DrawerNavigator = () => {
         <Text style={styles.textStyle}>My Coupons</Text>
       </TouchableOpacity>
      
-         <TouchableOpacity style={styles.drawerItems}>
+         <TouchableOpacity onPress={()=>navigation.navigate("Profile")} style={styles.drawerItems}>
          <Text style={styles.textStyle}>My Profile</Text>
        </TouchableOpacity>
     
-  
+{/*   
       <TouchableOpacity style={styles.drawerItems}>
         <Text style={styles.textStyle}>Settings</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     
-      <TouchableOpacity style={styles.drawerItems}>     
+      <TouchableOpacity style={styles.drawerItems} onPress={()=> logout()}>     
           <Text style={styles.textStyle}>Log Out</Text>       
       </TouchableOpacity>
       
@@ -96,7 +106,9 @@ const DrawerNavigator = () => {
         };
       }}/>
       <Drawer.Screen name="MapViewScreen" component={MapViewScreen} />
+      <Drawer.Screen name="MerchantDeals" component={MerchantDeals} />
       <Drawer.Screen name="CouponScreen" component={CouponScreen} />
+      <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Login" component={Login}  options={({ route, navigation }) => {
         return {
           swipeEnabled: false,
